@@ -1,448 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Modern Portfolio</title>
-
+    <title>Your Farm - Management</title>
     <link rel="stylesheet" href="css/style.css">
-
-</head>
-
+  
+  
+  </head>
 <body>
-
-    <!-- =========================
-            HEADER / NAVBAR
-    ========================= -->
-
-    <header class="header">
-
-        <nav class="navbar">
-
-            <!-- Logo -->
-            <a href="#" class="logo">
-                Portfolio.
-            </a>
-
-            <!-- Navigation -->
-            <ul class="nav-links">
-
-                <li>
-                    <a href="#home" class="active">Home</a>
-                </li>
-
-                <li>
-                    <a href="#about">About</a>
-                </li>
-
-                <li>
-                    <a href="#skills">Skills</a>
-                </li>
-
-                <li>
-                    <a href="#projects">Projects</a>
-                </li>
-
-                <li>
-                    <a href="#contact">Contact</a>
-                </li>
-
-            </ul>
-
-            <!-- Right Side -->
-            <div class="nav-right">
-
-                <!-- Theme Button -->
-                <button class="theme-btn">
-                    🌙
-                </button>
-
-                <!-- Mobile Menu -->
-                <div class="menu-toggle">
-                    ☰
-                </div>
-
-            </div>
-
-        </nav>
-
+    <header>
+        <h1>Your Farm</h1>
     </header>
 
+    <div class="container">
+        <!-- Dashboard / Summary Section -->
+        <section id="dashboard">
+            <h2>হিসাবের সামারি (Summary)</h2>
+            <div class="filter-section">
+                <label>তারিখ অনুযায়ী ফিল্টার:</label>
+                <input type="date" id="start-date"> থেকে 
+                <input type="date" id="end-date">
+                <button onclick="filterData()">Filter</button>
+                <button onclick="resetFilter()">Reset</button>
+            </div>
+            
+            <div class="summary-cards">
+                           <!-- বিস্তারিত খরচের টেবিল -->
+            <div id="expense-report" class="report-section" style="display: none;">
+                <h3>নির্দিষ্ট তারিখের খরচের বিস্তারিত তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>প্রজেক্ট</th>
+                            <th>খাত</th>
+                            <th>বিবরণ</th>
+                            <th>টাকা</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expense-table-body">
+                        <!-- জাভাস্ক্রিপ্ট থেকে ডাটা এখানে আসবে -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="income-report" class="report-section" style="display: none;">
+                <h3 class="income-title">নির্দিষ্ট তারিখের আয়ের বিস্তারিত তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>প্রজেক্ট</th>
+                            <th> পরিমাণ (কেজি/পিস)</th>
+                            <th>টাকা</th>
+                        </tr>
+                    </thead>
+                    <tbody id="income-table-body">
+                        </tbody>
+                </table>
+            </div>
+                <div class="card income">
+                    <h3>মোট আয়</h3>
+                    <p><span id="total-income">0</span> ৳</p>
+                </div>
+                <div class="card expense">
+                    <h3>মোট খরচ</h3>
+                    <p><span id="total-expense">0</span> ৳</p>
+                </div>
+                <div class="card profit">
+                    <h3>মোট লাভ / মোট ক্ষতি</h3>
+                    <p><span id="total-profit">0</span> ৳</p>
+                </div>
+            </div>
+        </section>
 
+        <!-- Members Section -->
+        <section id="members">
+            <h2>আমাদের টিম (১০ জন)</h2>
+            <div class="member-grid" id="member-container">
+                <!-- JavaScript দিয়ে এখানে ১০ জনের ছবি ও নাম তৈরি করা হবে -->
+            </div>
+        </section>
 
-    <!-- =========================
-            HERO SECTION
-    ========================= -->
-
-    <section class="hero" id="home">
-
-        <div class="hero-container">
-
-            <!-- Left Content -->
-            <div class="hero-content">
-
-                <h3>Hello, It's Me</h3>
-
-                <h1>Md. Mehedi Hasan</h1>
-
-                <h2>
-                    And I'm a
-                    <span class="typing"></span>
-                </h2>
-
-                <p>
-                    I create modern, responsive and user-friendly
-                    websites with clean design and smooth user experience.
-                </p>
-
-                <!-- Buttons -->
-                <div class="hero-buttons">
-
-                    <a href="#" class="btn primary-btn">
-                        Hire Me
-                    </a>
-
-                    <a href="#" class="btn secondary-btn">
-                        Download CV
-                    </a>
-
+        <!-- Data Entry Section -->
+        <section id="data-entry">
+            <h2>হিসাব এন্ট্রি করুন</h2>
+            <form id="farm-form">
+                <div class="form-group">
+                    <label>তারিখ:</label>
+                    <input type="date" id="entry-date" required>
                 </div>
 
-                <!-- Social Icons -->
-                <div class="social-icons">
-
-                    <a href="#">🌐</a>
-
-                    <a href="#">💼</a>
-
-                    <a href="#">📷</a>
-
-                    <a href="#">🐙</a>
-
+                <div class="form-group">
+                    <label>এন্ট্রির ধরন:</label>
+                    <select id="entry-type" onchange="toggleFields()" required>
+                        <option value="income">আয় (Income)</option>
+                        <option value="expense">খরচ (Expense)</option>
+                    </select>
                 </div>
 
-            </div>
-
-            <!-- Right Image -->
-            <div class="hero-image">
-
-                <img src="images/mehedi.jpeg" alt="">
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =========================
-            ABOUT SECTION
-    ========================= -->
-
-    <section class="about" id="about">
-
-        <div class="about-container">
-
-            <!-- Left Image -->
-            <div class="about-image">
-
-                <img src=" Your About Image " alt="About image">
-
-            <!-- Right Content -->
-            <div class="about-content">
-
-                <h4>About Me</h4>
-
-                <h2>
-                    Passionate Frontend Developer &
-                    <span>Creative Designer</span>
-                </h2>
-
-                <p>
-                    I build modern responsive and interactive websites
-                    using HTML, CSS and JavaScript.
-                </p>
-
-                <!-- Info -->
-                <div class="about-info">
-
-                    <div class="info-box">
-
-                        <h3>2+</h3>
-
-                        <span>Years Experience</span>
-
-                    </div>
-
-                    <div class="info-box">
-
-                        <h3>25+</h3>
-
-                        <span>Projects Completed</span>
-
-                    </div>
-
-                    <div class="info-box">
-
-                        <h3>15+</h3>
-
-                        <span>Happy Clients</span>
-
-                    </div>
-
+                <div class="form-group">
+                    <label>প্রজেক্টের নাম:</label>
+                    <select id="project-name" required>
+                        <option value="কলা বাগান">কলা বাগান</option>
+                        <option value="লেবু বাগান">লেবু বাগান</option>
+                        <option value="বরই বাগান">বরই বাগান</option>
+                    </select>
                 </div>
 
-                <a href="#" class="about-btn">
-                    Read More
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =========================
-            SKILLS SECTION
-    ========================= -->
-
-    <section class="skills" id="skills">
-
-        <div class="skills-header">
-
-            <h4>My Skills</h4>
-
-            <h2>
-                Technologies I
-                <span>Work With</span>
-            </h2>
-
-            <p>
-                I create responsive and modern websites
-                using frontend technologies.
-            </p>
-
-        </div>
-
-        <!-- Skills Container -->
-        <div class="skills-container">
-
-            <!-- Card -->
-            <div class="skill-card">
-
-                <div class="skill-icon">🌐</div>
-
-                <h3>HTML5</h3>
-
-                <p>
-                    Semantic and modern HTML structure.
-                </p>
-
-                <div class="skill-progress">
-
-                    <div class="skill-bar html">
-
-                        <span>95%</span>
-
-                    </div>
-
+                <!-- খরচের খাত (শুধু খরচ সিলেক্ট করলে দেখাবে) -->
+                <div class="form-group" id="expense-category" style="display:none;">
+                    <label>খরচের খাত:</label>
+                    <select id="expense-type">
+                        <option value="লেবার বিল">লেবার বিল</option>
+                        <option value="সার">সার</option>
+                        <option value="বিষ">বিষ/কীটনাশক</option>
+                        <option value="অন্যান্য">অন্যান্য</option>
+                    </select>
                 </div>
 
-            </div>
-
-            <!-- Card -->
-            <div class="skill-card">
-
-                <div class="skill-icon">🎨</div>
-
-                <h3>CSS3</h3>
-
-                <p>
-                    Responsive layouts and modern UI design.
-                </p>
-
-                <div class="skill-progress">
-
-                    <div class="skill-bar css">
-
-                        <span>90%</span>
-
-                    </div>
-
+                <div class="form-group">
+                    <label>পরিমাণ/বিবরণ (যেমন: ৫০ কেজি বা ২ জন লেবার):</label>
+                    <input type="text" id="entry-details" placeholder="পরিমাণ লিখুন" required>
                 </div>
 
-            </div>
-
-            <!-- Card -->
-            <div class="skill-card">
-
-                <div class="skill-icon">⚡</div>
-
-                <h3>JavaScript</h3>
-
-                <p>
-                    Interactive frontend functionality.
-                </p>
-
-                <div class="skill-progress">
-
-                    <div class="skill-bar js">
-
-                        <span>85%</span>
-
-                    </div>
-
+                <div class="form-group">
+                    <label>টাকার পরিমাণ (৳):</label>
+                    <input type="number" id="entry-amount" placeholder="টাকার পরিমাণ লিখুন" required>
                 </div>
 
-            </div>
-
-            <!-- Card -->
-            <div class="skill-card">
-
-                <div class="skill-icon">🚀</div>
-
-                <h3>React JS</h3>
-
-                <p>
-                    Reusable and scalable web applications.
-                </p>
-
-                <div class="skill-progress">
-
-                    <div class="skill-bar react">
-
-                        <span>80%</span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="education">
-
-    <div class="section-heading">
-        <span>Education</span>
-        <h2>My Academic Journey</h2>
+                <button type="submit" class="submit-btn">সেভ করুন</button>
+     
+            </form>
+        </section>
     </div>
 
-    <div class="education-grid">
-
-        <div class="edu-card">
-            <div class="edu-icon">🎓</div>
-            <span class="year">2022 - Present</span>
-            <h3>BSc in Computer Science</h3>
-            <h4>National University</h4>
-            <p>Studying web development, programming, databases and software engineering.</p>
-        </div>
-
-        <div class="edu-card">
-            <div class="edu-icon">📚</div>
-            <span class="year">2020 - 2022</span>
-            <h3>Higher Secondary Certificate</h3>
-            <h4>Science Group</h4>
-            <p>Completed higher secondary education with a focus on technology and science.</p>
-        </div>
-
-        <div class="edu-card">
-            <div class="edu-icon">💻</div>
-            <span class="year">2023</span>
-            <h3>Frontend Development Course</h3>
-            <h4>Professional IT Institute</h4>
-            <p>Completed professional training in HTML, CSS, JavaScript and Bootstrap.</p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="contact">
-
-    <div class="contact-title">
-        <span>Contact</span>
-        <h2>Let's Work Together</h2>
-        <p>Have a project in mind? Feel free to contact me.</p>
-    </div>
-
-    <div class="contact-container">
-
-        <div class="contact-info">
-
-            <div class="info-card">
-                <h3>Email</h3>
-                <p>amran@example.com</p>
-            </div>
-
-            <div class="info-card">
-                <h3>Phone</h3>
-                <p>+880 1234 567890</p>
-            </div>
-
-            <div class="info-card">
-                <h3>Location</h3>
-                <p>Dhaka, Bangladesh</p>
-            </div>
-
-        </div>
-
-        <form class="contact-form">
-
-            <input type="text" placeholder="Your Name" required>
-
-            <input type="email" placeholder="Your Email" required>
-
-            <input type="text" placeholder="Subject" required>
-
-            <textarea rows="6" placeholder="Your Message" required></textarea>
-
-            <button type="submit">Send Message</button>
-
-        </form>
-
-    </div>
-
-</section>
-<footer class="footer">
-
-    <div class="footer-content">
-
-        <h2>Amran Portfolio</h2>
-
-        <p class="footer-text">
-            Frontend Web Developer & Trainer
-        </p>
-
-        <div class="datetime-box">
-            <h3>Current Date & Time</h3>
-
-            <p id="date"></p>
-
-            <p id="time"></p>
-        </div>
-
-    </div>
-
-  
-</footer>
-
-
-    <script src="server.js"></script>
-
+    <script src="script.js"></script>
 </body>
-
 </html>
+
 
 
